@@ -1,9 +1,10 @@
-const BlogListItem = (props)=>{
+import Link from "next/link"
+const BlogListItem = ({blog})=>{
     return(
         <>
             <div className="cs-blog_item">
                 <div className="cs-blog_pic_back">
-                    <img src={props.img} alt="" />
+                    <img src={blog.blogAvator} alt="" />
                     <a href="" className="cs-circle d-flex align-center justify-center">
                         <img src="../images/ani_arrow.gif" />
                     </a>
@@ -12,11 +13,11 @@ const BlogListItem = (props)=>{
                     <div className="cs-widget_section d-flex align-center">
                         <div className="cs-date d-flex align-center">
                             <img src="../images/cal.png" />
-                            {props.date}
+                            {blog.blogDate}
                         </div>
-                        <div className="cs-category">{props.cat}</div>
+                        <div className="cs-category">{blog.blogCat}</div>
                     </div>
-                    <h2><a href="">{props.title}</a></h2>
+                    <h2><Link href={`/${blog.id}`}><a>{blog.blogTitle}</a></Link></h2>
                 </div>
             </div>
         </>

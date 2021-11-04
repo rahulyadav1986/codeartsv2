@@ -1,10 +1,18 @@
-import Image from 'next/image';
+
+import useSWR from 'swr';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { menudata } from '../../data/menudata';
 import Link from 'next/link';
 import Logo from './Logo';
 import RightSideBar from './RightSideBar';
+const fetcher = async()=>{
+    const res = await fetch("http://localhost:3000/menudata");
+    const data = await res.json();
+    return data
+}
+
+
+
 const Header = ()=> {
     const [click,setclick]= useState(false);
     const menuclick = ()=> setclick(!click);
@@ -20,6 +28,10 @@ const Header = ()=> {
             ""
         }
     }
+    const {data, error} = useSWR('menudata', fetcher);
+    if(error) return "Error Occoured";
+    if(!data) return "Loading...";
+
     return (
       <>
         <div className={click ? 'cs-ovarlay cs-ovarlay_open' : 'cs-ovarlay' } onClick={()=>setclick(false)}></div>
@@ -35,11 +47,15 @@ const Header = ()=> {
                     <div className="cs-mobile_hamburger d-flex align-center" onClick={mobilemenuClick}>
                         <span></span>
                     </div>
-                    <ul class="cs-menu d-flex align-center">
+                    <ul className="cs-menu d-flex align-center">
                         {
-                            menudata.map((item,i)=>{
+                            data.map((item,i)=>{
                             return(
-                                    <li key={i} className={isActive(item.navurl)}><Link href={item.navurl}><a>{item.navname}</a></Link></li>
+                                    <li key={i} className={isActive(item.navurl)}>
+                                        <Link href={item.navurl}>
+                                            <a>{item.navname}</a>
+                                        </Link>
+                                    </li>
                                 )
                             })  
                         }
@@ -64,7 +80,7 @@ const Header = ()=> {
                 
                 <ul className="cs-menu">
                     {
-                        menudata.map((item,i)=>{
+                        data.map((item,i)=>{
                         return(
                                 <li key={i}  onClick={mobilemenuClick} className={isActive(item.navurl)}><Link href={item.navurl}><a>{item.navname}</a></Link></li>
                             )

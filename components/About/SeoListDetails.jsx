@@ -6,7 +6,7 @@ const SeoListDetails = ()=>{
             {
                 seolistdata.map((item, i)=>{
                     return(
-                        <SeoListItem key="{i}"
+                        <SeoListItem key={i}
                             icon={item.icon}
                             title={item.title}
                             des={item.des}

@@ -1,17 +1,20 @@
-const MarketingListItem = (props)=>{
+import Link from "next/link";
+const MarketingListItem = ({marketing})=>{
     return(
         <>
             <li>
-                <a href="" className="d-flex align-center">
+                <Link href={`/our-services/${marketing.url}`}>
+                <a className="d-flex align-center">
                     <lord-icon
-                        src={props.icon}
+                        src={marketing.icon}
                         trigger="loop"
                         delay="2000"
                         colors="primary:#121331,secondary:#f47514" 
                     >
                     </lord-icon>
-                    {props.title}
+                    {marketing.title}
                 </a>
+                </Link>
             </li>
         </>
     )

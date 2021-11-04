@@ -3,7 +3,7 @@ const WhatWeDoItem = ({service})=>{
     return(
         <>
             <div className="cs-portion">
-                <Link href={"/our-services/"+ service.slug}>
+                <Link href={`/our-services/${service.id}`}>
                     <a className="cs-heading d-flex">
                         <div className="cs-image_area">
                             <img src={service.img1} />

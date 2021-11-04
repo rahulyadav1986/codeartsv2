@@ -1,14 +1,14 @@
 import CustomHead from "../components/Shared/CustomHead";
 import InnerHero from "../components/Shared/InnerHero";
-import WhyChooseUsCards from '../components/Home/WhyChooseDetails/WhyChooseUsCards';
-import WhyList from "../components/Home/WhyChooseDetails/WhyLists";
 import WhyChooseusContent from "../components/Home/WhyChooseDetails/WhyChooseUsContent";
 import SeoListDetails from "../components/About/SeoListDetails";
 import SkillItem from "../components/Skills/SkillItem";
 import TeamItem from "../components/Team/TeamItem";
 import TestimonialItem from "../components/Testimonials/TestimonialItem";
 import WhatWeDoItem from "../components/Services/WhatWeDoItem";
-const About = ({services, skills, teams, testimonials})=>{
+import WhyChooseItem from "../components/Home/WhyChooseDetails/WhyChooseItem";
+import WhyListItem from "../components/Home/WhyChooseDetails/WhyListItem";
+const About = ({whychoose, services, skills, teams, testimonials})=>{
     
     return(
         <>
@@ -23,7 +23,13 @@ const About = ({services, skills, teams, testimonials})=>{
             <div className="cs-why_choose_us_section inner pb">
                 <div className="cs-container d-flex align-center justify-between">
                     <ul className="cs-why_option">
-                        <WhyChooseUsCards />
+                        {
+                            whychoose[0].whychooselistdata.map((whychoose,i)=>{
+                                return(
+                                    <WhyChooseItem key={i} whychoose={whychoose} />
+                                )
+                            })
+                        }
                     </ul>
                 </div>
             </div>
@@ -31,10 +37,16 @@ const About = ({services, skills, teams, testimonials})=>{
             <div className="cs-about_section pb">
                 <div className="cs-container d-flex align-center justify-between">
                     <div className="cs-content_area">
-                        <WhyChooseusContent />
-                        <p>We are passionate about our work. Our designers stay ahead of the curve to provide engaging and user-friendly website designs to make your business stand out. Our developers are committed to maintaining the highest web standards so that your site will withstand the test of time. </p>
+                        <WhyChooseusContent whychoose={whychoose} />
+                        <p>{whychoose[0].aboutadditional}</p>
                         <ul className="cs-list d-flex align-center justify-between">
-                            <WhyList />
+                            {
+                                whychoose[0].whylistdata.map((whychoose,i)=>{
+                                    return(
+                                        <WhyListItem key={i} whychoose={whychoose} />
+                                    )
+                                })
+                            }
                         </ul>
                     </div>
                     <div className="cs-right_section">
@@ -168,25 +180,29 @@ const About = ({services, skills, teams, testimonials})=>{
 
 export default About
 
-export async function getServerSideProps(){
+export async function getStaticProps(){
 
-    const responseServices = await fetch("http://localhost:3000/api/services");
+    const resposeWhychoose= await fetch("http://localhost:3000/whychooseus");
+    const whychoosedata = await resposeWhychoose.json();
+
+    const responseServices = await fetch("http://localhost:4000/api/services");
     const ServicesData = await responseServices.json();
 
-    const responseSkill = await fetch("http://localhost:3000/api/skills");
+    const responseSkill = await fetch("http://localhost:4000/api/skills");
     const skillData = await responseSkill.json();
 
-    const responseTeam = await fetch("http://localhost:3000/api/teams");
+    const responseTeam = await fetch("http://localhost:4000/api/teams");
     const teamData = await responseTeam.json();
 
-    const responseTestimonial = await fetch("http://localhost:3000/api/testimonials");
+    const responseTestimonial = await fetch("http://localhost:4000/api/testimonials");
     const testimonialData = await responseTestimonial.json();
     return{
         props:{
+            whychoose: whychoosedata,
             services: ServicesData,
             skills: skillData,
             teams: teamData,
-            testimonials: testimonialData
+            testimonials: testimonialData.slice(0,3)
         }
     }
 

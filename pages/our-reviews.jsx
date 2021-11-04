@@ -1,41 +1,38 @@
-import dynamic from 'next/dynamic'
-import CustomHead from "../../components/Shared/CustomHead";
-import InnerHero from "../../components/Shared/InnerHero";
-import SkillItem from "../../components/Skills/SkillItem";
-const WhatWeDoItem = dynamic(
-    () => import('../../components/Services/WhatWeDoItem'),
-    { loading: () => <p>Loading...</p> }
-  )
-import TeamItem from "../../components/Team/TeamItem";
+import CustomHead from "../components/Shared/CustomHead";
+import InnerHero from "../components/Shared/InnerHero";
+import SkillItem from "../components/Skills/SkillItem";
+import TeamItem from "../components/Team/TeamItem";
+import ReviewItem from "../components/Testimonials/ReviewItem";
 
-const Services = ({serviceheadings, services, skills, teams})=>{
-    return (
+const Reviews = ({testimonials, skills, teams})=>{
+    return(
         <>
-             <CustomHead
-                title="Services"
+            <CustomHead
+                title="Reviews"
                 metades="This is About Us Content"
-            />
+            />            
             <InnerHero
-                pageTitle="Services"
+                pageTitle="Reviews"
             />
-            <div className="cs-services_section pt pb">
-            <div className="cs-container">
-                <div className="cs-custom_heading center">
-                    <h4>{serviceheadings[0].subtitle}</h4>
-                    <h2>{serviceheadings[0].maintitle}</h2>
-                </div>    
-                <div className="cs-main_section pt_small">
-                  {
-                    services.map((service,i)=>{
-                      return(
-                        <WhatWeDoItem key={i} service={service}  />
-                      )
-                    })
-                  }
-                    
-                </div>  
+            <div class="cs-reviews_section pt pb">
+                <div class="cs-container">
+                    <div class="cs-custom_heading center">
+                        <h4>REVIEWS</h4>
+                        <h2>Our Great Reviews</h2>
+                    </div>
+                    <div class="cs-main_reviews pt_small">
+                        {
+                            testimonials.map((review,i)=>{
+                                return(
+                                    <ReviewItem key={i} review={review} />
+                                )
+                            })
+                        }
+                        
+                
+                    </div>
+                </div>
             </div>
-        </div>       
             <div className="maximize_result pt pb">
                 <div className="cs-container">
                     <div className="cs-head d-flex align-center justify-between">
@@ -45,9 +42,9 @@ const Services = ({serviceheadings, services, skills, teams})=>{
                         </div>
                         <ul className="cs-skills_area">
                             {
-                                skills.map((skill)=>{
+                                skills.map((skill, i)=>{
                                     return(
-                                        <li key={skill.name}>
+                                        <li key={i}>
                                             <SkillItem skill={skill} />
                                         </li>
                                     )
@@ -75,35 +72,32 @@ const Services = ({serviceheadings, services, skills, teams})=>{
                     </div>
                 </div>
             </div>
+            
+            
         </>
     )
 }
 
-export default Services
+export default Reviews
+
 
 export async function getStaticProps(){
-    const responseServiceHeadings = await fetch("http://localhost:3000/serviceheadings");
-    const ServicesHeadingData = await responseServiceHeadings.json();
-    
-    const responseServices = await fetch("http://localhost:3000/services");
-    const ServicesData = await responseServices.json();
-
     const responseSkill = await fetch("http://localhost:4000/api/skills");
-    const skillData = await responseSkill.json();    
+    const skillData = await responseSkill.json();
 
     const responseTeam = await fetch("http://localhost:4000/api/teams");
     const teamData = await responseTeam.json();
 
+    const responseTestimonial = await fetch("http://localhost:4000/api/testimonials");
+    const testimonialData = await responseTestimonial.json();
     return{
         props:{
-            serviceheadings: ServicesHeadingData,
-            services: ServicesData,
-            skills: skillData,            
+            skills: skillData,
             teams: teamData,
-        },
-        revalidate: 10,
-       
+            testimonials: testimonialData,
+        }
     }
+
+    
+    
 }
-
-

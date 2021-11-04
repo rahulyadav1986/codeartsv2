@@ -484,6 +484,7 @@ img {
 
 .cs-company_details .cs_contact_details li p {
   margin: 0;
+  width: 80%;
 }
 
 .cs-company_details .cs_contact_details li lottie-player {

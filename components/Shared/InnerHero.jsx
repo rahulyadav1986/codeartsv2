@@ -1,3 +1,4 @@
+import Link from "next/link";
 const InnerHero = (props)=> {
     return(
         <>
@@ -5,7 +6,7 @@ const InnerHero = (props)=> {
                 <div className="cs-container">
                     <h1>{props.pageTitle}</h1>
                     <ul className="breadcrumb d-flex align-center justify-center">
-                        <li><a href="">Home</a></li>
+                        <li><Link href="/"><a>Home</a></Link></li>
                         <li>{props.pageTitle}</li>
                     </ul>
                 </div>

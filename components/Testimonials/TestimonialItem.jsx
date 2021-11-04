@@ -1,4 +1,4 @@
-const TestimonialItem = ({testimonial})=>{
+const TestimonialItem = ( {testimonial} )=>{
     return(
         <>
             <div className="cs-testi_item">

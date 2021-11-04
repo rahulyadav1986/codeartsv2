@@ -12,8 +12,8 @@ export const menudata=[
         navurl: '/our-services',
         submenu:[
             {
-                navname: 'sub 1',
-                navurl: '/sub1',
+                subnavname: 'sub 1',
+                subnavurl: '/sub1',
             }
         ]
     },
