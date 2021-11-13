@@ -83,23 +83,23 @@ const BlogSinglePage = ({services})=>{
 
 export default BlogSinglePage
 
-export async function getStaticPaths(){
-    const response = await fetch("http://localhost:3000/services");
-    const servicedata = await response.json();
-    const paths = servicedata.map((post)=>{
-        return{
-            params:{
-                serviceId: `${post.id}`
-            }
-        }
-    })
-    return{
-        paths,
-        fallback: false
-    }
-}
+//export async function getStaticPaths(){
+    //const response = await fetch("http://localhost:3000/services");
+    //const servicedata = await response.json();
+    //const paths = servicedata.map((post)=>{
+        //return{
+            //params:{
+               // serviceId: `${post.id}`
+            //}
+        //}
+    //})
+    //return{
+        //paths,
+        //fallback: false
+    //}
+//}
 
-export async function getStaticProps(context){    
+export async function getServerSideProps(context){    
     const {params} = context;
     const response = await fetch(`http://localhost:3000/services/${params.serviceId}`);
     const servicedata = await response.json();

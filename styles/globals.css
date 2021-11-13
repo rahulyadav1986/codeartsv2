@@ -3768,6 +3768,10 @@ header .cs-menu li .cs-sub_menu li a:hover {
   margin-right: 20px;
 }
 
+.cs-portfolio_section .cs-portfolio_filter_section .cs-filter_nav li.active a {
+  color: var(--primary-color);
+}
+
 .cs-portfolio_section .cs-portfolio_filter_section .cs-filter_nav li a {
   font-weight: 700;
   position: relative;
