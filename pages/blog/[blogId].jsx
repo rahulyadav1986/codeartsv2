@@ -1,6 +1,7 @@
 import Head from "next/head"
 import Link from "next/link";
-const BlogDetails = ({blogsDetails, blogList})=>{
+import Header from "../../components/Shared/Header";
+const BlogDetails = ({headerData, blogsDetails, blogList})=>{
     return(
         <>
             <Head>
@@ -8,6 +9,7 @@ const BlogDetails = ({blogsDetails, blogList})=>{
                 <meta name="description" content={blogsDetails.metaDescriptions} />                   
                 <link rel="canonical" href={blogsDetails.canonicalUrl} />
             </Head>
+            <Header headerData={headerData} /> 
             <div className="cs-inner_pages_hero_section pt pb">
                 <div className="cs-container">
                     <h1>{blogsDetails.blogTitle}</h1>
@@ -77,7 +79,11 @@ const BlogDetails = ({blogsDetails, blogList})=>{
 
 export default BlogDetails
 
-export async function getServerSideProps(context){    
+export async function getServerSideProps(context){  
+    
+    const responseHeader = await fetch("http://localhost:3000/headerData")
+    const headerdata = await responseHeader.json()
+    
     const responseBlogList = await fetch("http://localhost:3000/blogList");
     const BlogListData = await responseBlogList.json();
     const {params} = context;
@@ -85,6 +91,7 @@ export async function getServerSideProps(context){
     const BlogsData = await response.json();
     return{
         props:{
+            headerData: headerdata,
             blogsDetails: BlogsData,
             blogList: BlogListData
         }

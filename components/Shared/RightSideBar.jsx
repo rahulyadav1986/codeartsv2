@@ -1,21 +1,12 @@
 import Link from 'next/link'
-import CompanyAddress from "./CompanyAddress"
-import CompanyInfo from "./CompanyInfo"
-const RightSideBar= ()=>{
+import RightAddressInfo from './RightAddressInfo'
+const RightSideBar= ({headerData})=>{
     
     return(
         <>            
-            
-            <p>Codrarts Solution Pvt Ltd is one of the newest and best web design companies in Kolkata, offering a one stop web site design and web development solution for our customers.</p>
-            <div className="cs-company_details">
-                <h3>Contact Address</h3>
-                <CompanyAddress />
-            </div>
-            <div className="cs-company_details">
-                <h3>Contact Info</h3>
-                <CompanyInfo />
-            </div>
-            
+            <Link href="/"><a className="cs-brand_logo"><img src={headerData[0].logoMobile} alt={headerData[0].logoAlt}  /></a></Link>
+            <p dangerouslySetInnerHTML={{__html:headerData[0].companyAbout}}></p>
+            <RightAddressInfo headerData={headerData} />            
         </>
     )
 }

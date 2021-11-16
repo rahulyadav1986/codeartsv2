@@ -1,13 +1,15 @@
 import CustomHead from "../components/Shared/CustomHead"
+import Header from "../components/Shared/Header"
 import InnerHero from "../components/Shared/InnerHero"
 import SkillItem from "../components/Skills/SkillItem"
 import TeamItem from "../components/Team/TeamItem"
 import ReviewItem from "../components/Testimonials/ReviewItem"
 
-const Reviews = ({metaData, titleData, testimonials, skills, teams})=>{
+const Reviews = ({headerData, metaData, titleData, testimonials, skills, teams})=>{
     return(
         <>
-            <CustomHead metaData={metaData} />        
+            <CustomHead metaData={metaData} />
+            <Header headerData={headerData} />        
             <InnerHero titleData={titleData} />
             <div class="cs-reviews_section pt pb">
                 <div class="cs-container">
@@ -80,6 +82,9 @@ export async function getServerSideProps(){
     const resposemeta= await fetch("http://localhost:3000/ourReviewsPageSeoMeta");
     const metadata = await resposemeta.json();
 
+    const responseHeader = await fetch("http://localhost:3000/headerData")
+    const headerdata = await responseHeader.json()
+
     const resposetitle= await fetch("http://localhost:3000/ourReviewsPageTitle");
     const titledata = await resposetitle.json();    
 
@@ -94,6 +99,7 @@ export async function getServerSideProps(){
     return{
         props:{
             metaData: metadata,
+            headerData: headerdata,
             titleData: titledata,     
             skills: skillData,
             teams: teamData,

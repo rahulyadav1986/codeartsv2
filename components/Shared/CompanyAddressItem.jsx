@@ -1,16 +1,16 @@
-const CompanyAddressItem = (props)=>{
+const CompanyAddressItem = ({address})=>{
     return(
         <>
             <li className="d-flex align-center">
                 <lottie-player 
-                    src={props.icon}  
+                    src={address.icon}  
                     background="transparent"  
                     speed="1"  
                     loop autoplay>
                 </lottie-player>
                 <p>
-                    <strong>{props.country} </strong><br />
-                    {props.address}  
+                    <strong>{address.country} </strong><br />
+                    {address.address}  
                 </p>
             </li>
         </>

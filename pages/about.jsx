@@ -8,13 +8,14 @@ import TestimonialItem from "../components/Testimonials/TestimonialItem"
 import WhatWeDoItem from "../components/Services/WhatWeDoItem"
 import WhyChooseItem from "../components/Home/WhyChooseDetails/WhyChooseItem"
 import WhyListItem from "../components/Home/WhyChooseDetails/WhyListItem"
-const About = ({metaData, titleData,  whychoose, services, skills, teams, testimonials})=>{
+import Header from "../components/Shared/Header"
+const About = ({metaData, headerData, titleData,  whychoose, services, skills, teams, testimonials})=>{
     
     return(
         <>
-            <CustomHead metaData={metaData} />            
+            <CustomHead metaData={metaData} />   
+            <Header headerData={headerData} />          
             <InnerHero titleData={titleData} />
-
             <div className="cs-why_choose_us_section inner pb">
                 <div className="cs-container d-flex align-center justify-between">
                     <ul className="cs-why_option">
@@ -179,6 +180,9 @@ export async function getServerSideProps(){
     const resposemeta= await fetch("http://localhost:3000/aboutPageSeoMeta");
     const metadata = await resposemeta.json();
 
+    const responseHeader = await fetch("http://localhost:3000/headerData")
+    const headerdata = await responseHeader.json()
+
     const resposetitle= await fetch("http://localhost:3000/aboutPageTitle");
     const titledata = await resposetitle.json();
 
@@ -199,6 +203,7 @@ export async function getServerSideProps(){
     return{
         props:{
             metaData: metadata,
+            headerData: headerdata,
             titleData: titledata,
             whychoose: whychoosedata,
             services: ServicesData,

@@ -1,13 +1,14 @@
 import CustomHead from "../../components/Shared/CustomHead"
 import InnerHero from "../../components/Shared/InnerHero"
 import BlogListItem from "../../components/Blogs/BlogListItem"
+import Header from "../../components/Shared/Header"
 
-const Blogs = ({metaData, titleData, blogsDetails, blogList})=>{
+const Blogs = ({metaData, headerData, titleData, blogsDetails, blogList})=>{
     return(
         <>
             <CustomHead metaData={metaData} />
-            <InnerHero titleData={titleData} /> 
-            
+            <Header headerData={headerData} /> 
+            <InnerHero titleData={titleData} />             
             <div className="cs-blogs_section inner pt pb">        
                 <div className="cs-container">
                     <div className="cs-custom_heading center">
@@ -41,6 +42,9 @@ export async function getServerSideProps(){
     const resposemeta= await fetch("http://localhost:3000/blogsPageSeoMeta");
     const metadata = await resposemeta.json();
 
+    const responseHeader = await fetch("http://localhost:3000/headerData")
+    const headerdata = await responseHeader.json()
+
     const resposetitle= await fetch("http://localhost:3000/blogPageTitle");
     const titledata = await resposetitle.json();
 
@@ -53,6 +57,7 @@ export async function getServerSideProps(){
     return{
         props:{
             metaData: metadata,
+            headerData: headerdata,
             titleData: titledata,
             blogsDetails: BlogsData,
             blogList: BlogListData

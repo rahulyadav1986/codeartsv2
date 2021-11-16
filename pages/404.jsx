@@ -1,6 +1,7 @@
 import Head from "next/head"
 import Link from "next/link";
-const PageNotFound = ()=>{
+import Header from "../components/Shared/Header";
+const PageNotFound = ({headerData})=>{
     return(
         <>
             <Head>
@@ -8,6 +9,7 @@ const PageNotFound = ()=>{
                 <meta name="description" content="Page Not Found" />                   
                 <link rel="canonical" href="http://codeartssolution.com/404/" />
             </Head>
+            <Header headerData={headerData} /> 
             <div className="cs-inner_pages_hero_section pt pb">
                 <div className="cs-container">
                     <h1>Page Not Found</h1>
@@ -22,4 +24,18 @@ const PageNotFound = ()=>{
 }
 
 export default PageNotFound
+
+
+export async function getServerSideProps(){
+
+    const responseHeader = await fetch("http://localhost:3000/headerData")
+    const headerdata = await responseHeader.json()
+    
+    return{
+        props:{          
+            headerData: headerdata,      
+        }
+    }
+    
+  }
 

@@ -2,15 +2,16 @@ import CustomHead from "../../components/Shared/CustomHead";
 import Projects from "../../components/Projects"
 import InnerHero from "../../components/Shared/InnerHero"
 import { useState } from 'react'
+import Header from "../../components/Shared/Header";
 
 
-const LastProjects = ({metaData, titleData, projects})=>{
+const LastProjects = ({metaData, headerData, titleData, projects})=>{
     const [ProjectDetailsClick, setProjectDetailsClick]= useState(false);
     const ProjectdelClick = ()=> setProjectDetailsClick(!ProjectDetailsClick);
     return(
         <>
             <CustomHead metaData={metaData} />
-            
+            <Header headerData={headerData} /> 
             <InnerHero titleData={titleData} />
             <div className="cs-portfolio_section pt pb">
                 <div className="cs-container">
@@ -125,6 +126,9 @@ export async function getServerSideProps(){
     const resposemeta= await fetch("http://localhost:3000/latestProjectsPageSeoMeta");
     const metadata = await resposemeta.json();
 
+    const responseHeader = await fetch("http://localhost:3000/headerData")
+    const headerdata = await responseHeader.json()
+
     const resposetitle= await fetch("http://localhost:3000/projectPageTitle");
     const titledata = await resposetitle.json();
 
@@ -134,6 +138,7 @@ export async function getServerSideProps(){
     return{
         props:{
             metaData: metadata,
+            headerData: headerdata,
             titleData: titledata,
             projects: ProjectData
         }

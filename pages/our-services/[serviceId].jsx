@@ -1,6 +1,7 @@
 import Head from "next/head"
 import Link from "next/link"
-const BlogSinglePage = ({services})=>{
+import Header from "../../components/Shared/Header"
+const BlogSinglePage = ({headerData, services})=>{
     return(
         <>
             <Head>
@@ -8,6 +9,7 @@ const BlogSinglePage = ({services})=>{
                 <meta name="description" content={services.metaDescriptions} />                   
                 <link rel="canonical" href={services.canonicalUrl} />
             </Head>
+            <Header headerData={headerData} /> 
             <div className="cs-inner_pages_hero_section pt pb">
                 <div className="cs-container">
                     <h1>{services.title}</h1>
@@ -89,12 +91,17 @@ const BlogSinglePage = ({services})=>{
 
 export default BlogSinglePage
 
-export async function getServerSideProps(context){    
+export async function getServerSideProps(context){   
+    
+    const responseHeader = await fetch("http://localhost:3000/headerData")
+    const headerdata = await responseHeader.json()
+    
     const {params} = context;
     const response = await fetch(`http://localhost:3000/services/${params.serviceId}`);
     const servicedata = await response.json();
     return{
         props:{
+            headerData: headerdata,
             services: servicedata,
         },
     }

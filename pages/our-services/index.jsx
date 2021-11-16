@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import CustomHead from '../../components/Shared/CustomHead'
+import Header from '../../components/Shared/Header'
 import InnerHero from "../../components/Shared/InnerHero"
 import SkillItem from "../../components/Skills/SkillItem"
 const WhatWeDoItem = dynamic(
@@ -8,10 +9,11 @@ const WhatWeDoItem = dynamic(
   )
 import TeamItem from "../../components/Team/TeamItem";
 
-const Services = ({metaData, titleData, serviceheadings, services, skills, teams})=>{
+const Services = ({metaData, headerData, titleData, serviceheadings, services, skills, teams})=>{
     return (
         <>
             <CustomHead metaData={metaData} />
+            <Header headerData={headerData} /> 
             <InnerHero titleData={titleData} />
             <div className="cs-services_section pt pb">
             <div className="cs-container">
@@ -80,6 +82,9 @@ export async function getServerSideProps(){
     const resposemeta= await fetch("http://localhost:3000/servicesPageSeoMeta");
     const metadata = await resposemeta.json();
 
+    const responseHeader = await fetch("http://localhost:3000/headerData")
+    const headerdata = await responseHeader.json()
+
     const resposetitle= await fetch("http://localhost:3000/servicesPageTitle");
     const titledata = await resposetitle.json();
 
@@ -98,6 +103,7 @@ export async function getServerSideProps(){
     return{
         props:{
             metaData: metadata,
+            headerData: headerdata,
             titleData: titledata,
             serviceheadings: ServicesHeadingData,
             services: ServicesData,

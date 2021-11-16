@@ -1,4 +1,5 @@
 import CustomHead from "../components/Shared/CustomHead"
+import Header from "../components/Shared/Header"
 import Hero from '../components/Home/Hero'
 import WhyChooseUs from '../components/Home/WhyChooseDetails/WhyChooseUs'
 import Marketing from '../components/Home/Marketing/Marketing'
@@ -9,14 +10,14 @@ import WhatWeDoItem from '../components/Services/WhatWeDoItem'
 import BlogListItem from '../components/Blogs/BlogListItem'
 
 
-const Home = ({metaData, heros, whychoose, serviceheadings, services, marketing, videos, blogsDetails, blogList, testimonials})=> {
+
+const Home = ({metaData, headerData, heros, whychoose, serviceheadings, services, marketing, videos, blogsDetails, blogList, testimonials})=> {
   return (
-    <> 
-       
-       <CustomHead metaData={metaData} />   
+    <>        
+       <CustomHead metaData={metaData} />  
+       <Header headerData={headerData} />
        <Hero heros={heros} />
        <WhyChooseUs whychoose={whychoose} />
-       
        <div className="cs-services_section pt pb">
             <div className="cs-container">
                 <div className="cs-custom_heading center">
@@ -98,6 +99,9 @@ export async function getServerSideProps(){
 
   const resposemeta= await fetch("http://localhost:3000/homePageSeoMeta");
   const metadata = await resposemeta.json();  
+
+  const responseHeader = await fetch("http://localhost:3000/headerData")
+  const headerdata = await responseHeader.json()
  
   const resposeHero= await fetch("http://localhost:3000/herodata");
   const herodata = await resposeHero.json();
@@ -129,7 +133,8 @@ export async function getServerSideProps(){
   
   return{
       props:{
-          metaData: metadata,         
+          metaData: metadata, 
+          headerData: headerdata,        
           heros: herodata,
           whychoose: whychoosedata,
           serviceheadings: ServicesHeadingData,
