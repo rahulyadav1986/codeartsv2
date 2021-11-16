@@ -1,16 +1,22 @@
-import CustomHead from "../../components/Shared/CustomHead";
-import InnerHero from "../../components/Shared/InnerHero";
-
+import Head from "next/head"
+import Link from "next/link"
 const BlogSinglePage = ({services})=>{
     return(
         <>
-            <CustomHead
-                title="Services"
-                metades="This is About Us Content"
-            />
-            <InnerHero
-                pageTitle="Services"
-            />
+            <Head>
+                <title>{services.title}</title> 
+                <meta name="description" content={services.metaDescriptions} />                   
+                <link rel="canonical" href={services.canonicalUrl} />
+            </Head>
+            <div className="cs-inner_pages_hero_section pt pb">
+                <div className="cs-container">
+                    <h1>{services.title}</h1>
+                    <ul className="breadcrumb d-flex align-center justify-center">
+                        <li><Link href="/"><a>Home</a></Link></li>
+                        <li>{services.title}</li>
+                    </ul>
+                </div>
+           </div>
            <div className="cs-about_section cs-seo_company pt pb">
                 <div className="cs-container d-flex align-center justify-between">
                     <div className="cs-right_section">
@@ -82,22 +88,6 @@ const BlogSinglePage = ({services})=>{
 
 
 export default BlogSinglePage
-
-//export async function getStaticPaths(){
-    //const response = await fetch("http://localhost:3000/services");
-    //const servicedata = await response.json();
-    //const paths = servicedata.map((post)=>{
-        //return{
-            //params:{
-               // serviceId: `${post.id}`
-            //}
-        //}
-    //})
-    //return{
-        //paths,
-        //fallback: false
-    //}
-//}
 
 export async function getServerSideProps(context){    
     const {params} = context;

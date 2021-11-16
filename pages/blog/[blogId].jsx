@@ -1,16 +1,22 @@
-import CustomHead from "../components/Shared/CustomHead";
-import InnerHero from "../components/Shared/InnerHero";
+import Head from "next/head"
 import Link from "next/link";
 const BlogDetails = ({blogsDetails, blogList})=>{
     return(
         <>
-            <CustomHead
-                title="Blogs"
-                metades="This is About Us Content"
-            />
-            <InnerHero
-                pageTitle="Blogs"
-            />
+            <Head>
+                <title>{blogsDetails.blogTitle}</title> 
+                <meta name="description" content={blogsDetails.metaDescriptions} />                   
+                <link rel="canonical" href={blogsDetails.canonicalUrl} />
+            </Head>
+            <div className="cs-inner_pages_hero_section pt pb">
+                <div className="cs-container">
+                    <h1>{blogsDetails.blogTitle}</h1>
+                    <ul className="breadcrumb d-flex align-center justify-center">
+                        <li><Link href="/"><a>Home</a></Link></li>
+                        <li>{blogsDetails.blogTitle}</li>
+                    </ul>
+                </div>
+            </div>
             <div className="cs-blog_details_section pt pb">
                 <div className="cs-container d-flex">
                     <div className="cs-left_content_area">
@@ -45,7 +51,7 @@ const BlogDetails = ({blogsDetails, blogList})=>{
                                     blogList.slice(0,5).map((item,i)=>{
                                         return(
                                             <li>
-                                                <Link href={`/${item.id}`} >
+                                                <Link href={`/blog/${item.id}`} >
                                                 <a className="d-flex align-center">
                                                     <img src={item.blogAvator} alt="" />
                                                     <div>
@@ -71,26 +77,7 @@ const BlogDetails = ({blogsDetails, blogList})=>{
 
 export default BlogDetails
 
-
-
-export async function getStaticPaths(){
-    const response = await fetch("http://localhost:3000/blogList");
-    const BlogsData = await response.json();
-    const paths = BlogsData.map((post)=>{
-        return{
-            params:{
-                blogId: `${post.id}`
-            }
-        }
-    })
-    return{
-        paths,
-        fallback: false,
-       
-    }
-}
-
-export async function getStaticProps(context){    
+export async function getServerSideProps(context){    
     const responseBlogList = await fetch("http://localhost:3000/blogList");
     const BlogListData = await responseBlogList.json();
     const {params} = context;

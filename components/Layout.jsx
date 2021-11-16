@@ -7,6 +7,8 @@ const Layout = ({children})=> {
       <>
         <Head>
             <link rel="manifest" href="/manifest.json" />
+            <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+            <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>          
         </Head>
         <Header />
         <main>

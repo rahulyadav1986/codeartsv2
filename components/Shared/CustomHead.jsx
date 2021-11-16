@@ -1,11 +1,12 @@
 import Head from "next/head"
-const CustomHead = (props)=>{
+const CustomHead = ({metaData})=>{
     return(
         <>
             <Head>
-                <title>{props.title}</title> 
-                <meta name="description" content={props.metades}></meta>
-            </Head>
+                <title>{metaData[0].title}</title> 
+                <meta name="description" content={metaData[0].metaDescriptions} />                   
+                <link rel="canonical" href={metaData[0].canonicalUrl} />
+            </Head> 
         </>
     )
 }

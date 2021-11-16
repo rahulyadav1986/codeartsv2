@@ -1,23 +1,18 @@
 import dynamic from 'next/dynamic'
-import CustomHead from "../../components/Shared/CustomHead";
-import InnerHero from "../../components/Shared/InnerHero";
-import SkillItem from "../../components/Skills/SkillItem";
+import CustomHead from '../../components/Shared/CustomHead'
+import InnerHero from "../../components/Shared/InnerHero"
+import SkillItem from "../../components/Skills/SkillItem"
 const WhatWeDoItem = dynamic(
     () => import('../../components/Services/WhatWeDoItem'),
     { loading: () => <p>Loading...</p> }
   )
 import TeamItem from "../../components/Team/TeamItem";
 
-const Services = ({serviceheadings, services, skills, teams})=>{
+const Services = ({metaData, titleData, serviceheadings, services, skills, teams})=>{
     return (
         <>
-             <CustomHead
-                title="Services"
-                metades="This is About Us Content"
-            />
-            <InnerHero
-                pageTitle="Services"
-            />
+            <CustomHead metaData={metaData} />
+            <InnerHero titleData={titleData} />
             <div className="cs-services_section pt pb">
             <div className="cs-container">
                 <div className="cs-custom_heading center">
@@ -81,7 +76,13 @@ const Services = ({serviceheadings, services, skills, teams})=>{
 
 export default Services
 
-export async function getStaticProps(){
+export async function getServerSideProps(){
+    const resposemeta= await fetch("http://localhost:3000/servicesPageSeoMeta");
+    const metadata = await resposemeta.json();
+
+    const resposetitle= await fetch("http://localhost:3000/servicesPageTitle");
+    const titledata = await resposetitle.json();
+
     const responseServiceHeadings = await fetch("http://localhost:3000/serviceheadings");
     const ServicesHeadingData = await responseServiceHeadings.json();
     
@@ -96,13 +97,13 @@ export async function getStaticProps(){
 
     return{
         props:{
+            metaData: metadata,
+            titleData: titledata,
             serviceheadings: ServicesHeadingData,
             services: ServicesData,
             skills: skillData,            
             teams: teamData,
-        },
-        revalidate: 10,
-       
+        }
     }
 }
 

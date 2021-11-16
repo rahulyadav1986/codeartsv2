@@ -3,13 +3,14 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Logo from './Logo';
 import RightSideBar from './RightSideBar';
 const fetcher = async()=>{
     const res = await fetch("http://localhost:3000/menudata");
     const data = await res.json();
     return data
 }
+
+
 
 
 
@@ -20,6 +21,8 @@ const Header = ()=> {
     const [MobileClick, setMobileClick]= useState(false);
     const mobilemenuClick = ()=> setMobileClick(!MobileClick);
 
+   
+
     const router = useRouter();
     function isActive(route){
         if(route==router.pathname){
@@ -28,9 +31,12 @@ const Header = ()=> {
             ""
         }
     }
+    
     const {data, error} = useSWR('menudata', fetcher);
+    
     if(error) return "Error Occoured";
     if(!data) return "Loading...";
+    
 
     return (
       <>
@@ -42,7 +48,7 @@ const Header = ()=> {
         
         <header id="header">
             <div className="cs-container d-flex align-center justify-between">
-                <Logo src="../images/logo.png" />
+               <Link href="/"><a className="cs-brand_logo"><img src="../images/logo.png" alt="Codearts Solutions Pvt Ltd"  /></a></Link>
                 <div className="cs-header_right d-flex align-center">
                     <div className="cs-mobile_hamburger d-flex align-center" onClick={mobilemenuClick}>
                         <span></span>
@@ -53,8 +59,22 @@ const Header = ()=> {
                             return(
                                     <li key={i} className={isActive(item.navurl)}>
                                         <Link href={item.navurl}>
-                                            <a>{item.navname}</a>
+                                            <a>{item.navname} <i class={`fas ${item.icon}`}></i></a>                                            
                                         </Link>
+                                        <ul className="cs-sub_menu">
+                                            {
+                                                item.submenu.map((subitem,i)=>{
+                                                    return(
+                                                        <li key={i}>
+                                                            <Link href={subitem.subnavurl}>
+                                                                <a>{subitem.subnavname}</a>                                            
+                                                            </Link>
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                        </ul>
+                                       
                                     </li>
                                 )
                             })  
@@ -74,7 +94,7 @@ const Header = ()=> {
             
             <div className={MobileClick ? 'cs-mobile_menu cs-mobile_menu_open' : 'cs-mobile_menu'}>
                 <div className="header d-flex align-center justify-between">
-                <Logo src="../images/logo.png" />
+                   <Link href="/"><a className="cs-brand_logo"><img src="../images/logo.png" alt="Codearts Solutions Pvt Ltd"  /></a></Link>
                     <div className="cross" onClick={()=>setMobileClick(false)}><img src="../images/close.png" alt="" /></div>
                 </div>
                 
@@ -82,7 +102,12 @@ const Header = ()=> {
                     {
                         data.map((item,i)=>{
                         return(
-                                <li key={i}  onClick={mobilemenuClick} className={isActive(item.navurl)}><Link href={item.navurl}><a>{item.navname}</a></Link></li>
+                                <li key={i}  
+                                onClick={mobilemenuClick} className={isActive(item.navurl)}>
+                                    <Link href={item.navurl}>
+                                        <a>{item.navname}</a>
+                                    </Link>                                    
+                                </li>
                             )
                         })  
                     }
@@ -94,3 +119,4 @@ const Header = ()=> {
 }
 
 export default Header
+

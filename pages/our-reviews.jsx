@@ -1,19 +1,14 @@
-import CustomHead from "../components/Shared/CustomHead";
-import InnerHero from "../components/Shared/InnerHero";
-import SkillItem from "../components/Skills/SkillItem";
-import TeamItem from "../components/Team/TeamItem";
-import ReviewItem from "../components/Testimonials/ReviewItem";
+import CustomHead from "../components/Shared/CustomHead"
+import InnerHero from "../components/Shared/InnerHero"
+import SkillItem from "../components/Skills/SkillItem"
+import TeamItem from "../components/Team/TeamItem"
+import ReviewItem from "../components/Testimonials/ReviewItem"
 
-const Reviews = ({testimonials, skills, teams})=>{
+const Reviews = ({metaData, titleData, testimonials, skills, teams})=>{
     return(
         <>
-            <CustomHead
-                title="Reviews"
-                metades="This is About Us Content"
-            />            
-            <InnerHero
-                pageTitle="Reviews"
-            />
+            <CustomHead metaData={metaData} />        
+            <InnerHero titleData={titleData} />
             <div class="cs-reviews_section pt pb">
                 <div class="cs-container">
                     <div class="cs-custom_heading center">
@@ -81,7 +76,13 @@ const Reviews = ({testimonials, skills, teams})=>{
 export default Reviews
 
 
-export async function getStaticProps(){
+export async function getServerSideProps(){
+    const resposemeta= await fetch("http://localhost:3000/ourReviewsPageSeoMeta");
+    const metadata = await resposemeta.json();
+
+    const resposetitle= await fetch("http://localhost:3000/ourReviewsPageTitle");
+    const titledata = await resposetitle.json();    
+
     const responseSkill = await fetch("http://localhost:4000/api/skills");
     const skillData = await responseSkill.json();
 
@@ -92,6 +93,8 @@ export async function getStaticProps(){
     const testimonialData = await responseTestimonial.json();
     return{
         props:{
+            metaData: metadata,
+            titleData: titledata,     
             skills: skillData,
             teams: teamData,
             testimonials: testimonialData,

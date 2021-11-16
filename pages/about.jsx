@@ -1,25 +1,20 @@
-import CustomHead from "../components/Shared/CustomHead";
-import InnerHero from "../components/Shared/InnerHero";
-import WhyChooseusContent from "../components/Home/WhyChooseDetails/WhyChooseUsContent";
-import SeoListDetails from "../components/About/SeoListDetails";
-import SkillItem from "../components/Skills/SkillItem";
-import TeamItem from "../components/Team/TeamItem";
-import TestimonialItem from "../components/Testimonials/TestimonialItem";
-import WhatWeDoItem from "../components/Services/WhatWeDoItem";
-import WhyChooseItem from "../components/Home/WhyChooseDetails/WhyChooseItem";
-import WhyListItem from "../components/Home/WhyChooseDetails/WhyListItem";
-const About = ({whychoose, services, skills, teams, testimonials})=>{
+import CustomHead from "../components/Shared/CustomHead"
+import InnerHero from "../components/Shared/InnerHero"
+import WhyChooseusContent from "../components/Home/WhyChooseDetails/WhyChooseUsContent"
+import SeoListDetails from "../components/About/SeoListDetails"
+import SkillItem from "../components/Skills/SkillItem"
+import TeamItem from "../components/Team/TeamItem"
+import TestimonialItem from "../components/Testimonials/TestimonialItem"
+import WhatWeDoItem from "../components/Services/WhatWeDoItem"
+import WhyChooseItem from "../components/Home/WhyChooseDetails/WhyChooseItem"
+import WhyListItem from "../components/Home/WhyChooseDetails/WhyListItem"
+const About = ({metaData, titleData,  whychoose, services, skills, teams, testimonials})=>{
     
     return(
         <>
-            <CustomHead
-                title="About Us"
-                metades="This is About Us Content"
-            />
-            
-            <InnerHero
-                pageTitle="About us"
-            />
+            <CustomHead metaData={metaData} />            
+            <InnerHero titleData={titleData} />
+
             <div className="cs-why_choose_us_section inner pb">
                 <div className="cs-container d-flex align-center justify-between">
                     <ul className="cs-why_option">
@@ -180,7 +175,12 @@ const About = ({whychoose, services, skills, teams, testimonials})=>{
 
 export default About
 
-export async function getStaticProps(){
+export async function getServerSideProps(){
+    const resposemeta= await fetch("http://localhost:3000/aboutPageSeoMeta");
+    const metadata = await resposemeta.json();
+
+    const resposetitle= await fetch("http://localhost:3000/aboutPageTitle");
+    const titledata = await resposetitle.json();
 
     const resposeWhychoose= await fetch("http://localhost:3000/whychooseus");
     const whychoosedata = await resposeWhychoose.json();
@@ -198,6 +198,8 @@ export async function getStaticProps(){
     const testimonialData = await responseTestimonial.json();
     return{
         props:{
+            metaData: metadata,
+            titleData: titledata,
             whychoose: whychoosedata,
             services: ServicesData,
             skills: skillData,

@@ -17,7 +17,7 @@ const BlogListItem = ({blog})=>{
                         </div>
                         <div className="cs-category">{blog.blogCat}</div>
                     </div>
-                    <h2><Link href={`/${blog.id}`}><a>{blog.blogTitle}</a></Link></h2>
+                    <h2><Link href={`/blog/${blog.id}`}><a>{blog.blogTitle}</a></Link></h2>
                 </div>
             </div>
         </>

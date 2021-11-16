@@ -1,17 +1,13 @@
-import BlogListItem from "../components/Blogs/BlogListItem"
-import CustomHead from "../components/Shared/CustomHead"
-import InnerHero from "../components/Shared/InnerHero"
+import CustomHead from "../../components/Shared/CustomHead"
+import InnerHero from "../../components/Shared/InnerHero"
+import BlogListItem from "../../components/Blogs/BlogListItem"
 
-const Blogs = ({blogsDetails, blogList})=>{
+const Blogs = ({metaData, titleData, blogsDetails, blogList})=>{
     return(
         <>
-            <CustomHead
-                title="Blogs"
-                metades="This is About Us Content"
-            />            
-            <InnerHero
-                pageTitle="Blog Rahul"
-            />
+            <CustomHead metaData={metaData} />
+            <InnerHero titleData={titleData} /> 
+            
             <div className="cs-blogs_section inner pt pb">        
                 <div className="cs-container">
                     <div className="cs-custom_heading center">
@@ -41,7 +37,13 @@ const Blogs = ({blogsDetails, blogList})=>{
 
 export default Blogs
 
-export async function getStaticProps(){
+export async function getServerSideProps(){
+    const resposemeta= await fetch("http://localhost:3000/blogsPageSeoMeta");
+    const metadata = await resposemeta.json();
+
+    const resposetitle= await fetch("http://localhost:3000/blogPageTitle");
+    const titledata = await resposetitle.json();
+
     const responseBlogs = await fetch("http://localhost:3000/blogsDetails");
     const BlogsData = await responseBlogs.json();
 
@@ -50,6 +52,8 @@ export async function getStaticProps(){
 
     return{
         props:{
+            metaData: metadata,
+            titleData: titledata,
             blogsDetails: BlogsData,
             blogList: BlogListData
         }

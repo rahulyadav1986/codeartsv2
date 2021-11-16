@@ -1,23 +1,22 @@
-import dynamic from 'next/dynamic';
-import CustomHead from '../components/Shared/CustomHead';
-import Hero from '../components/Home/Hero';
-import WhyChooseUs from '../components/Home/WhyChooseDetails/WhyChooseUs';
-import Marketing from '../components/Home/Marketing/Marketing';
-import Video from '../components/Home/Video';
-import Brands from '../components/Home/Brands/Brands';
-import TestimonialItem from '../components/Testimonials/TestimonialItem';
-import WhatWeDoItem from '../components/Services/WhatWeDoItem';
-import BlogListItem from '../components/Blogs/BlogListItem';
+import CustomHead from "../components/Shared/CustomHead"
+import Hero from '../components/Home/Hero'
+import WhyChooseUs from '../components/Home/WhyChooseDetails/WhyChooseUs'
+import Marketing from '../components/Home/Marketing/Marketing'
+import Video from '../components/Home/Video'
+import Brands from '../components/Home/Brands/Brands'
+import TestimonialItem from '../components/Testimonials/TestimonialItem'
+import WhatWeDoItem from '../components/Services/WhatWeDoItem'
+import BlogListItem from '../components/Blogs/BlogListItem'
 
-const Home = ({heros, whychoose, serviceheadings, services, marketing, videos, blogsDetails, blogList, testimonials})=> {
+
+const Home = ({metaData, heros, whychoose, serviceheadings, services, marketing, videos, blogsDetails, blogList, testimonials})=> {
   return (
-    <>
-       <CustomHead
-          title="Codearts Solution Pvt Ltd | Web Marketing | Web Design | App Development"
-          metades="Codearts Solution Pvt Ltd is a digital marketing agency in Kolkata and Pune. We offer full web marketing solutions in Hyderabad &amp; Banglore. Contact us today."
-       />
+    <> 
+       
+       <CustomHead metaData={metaData} />   
        <Hero heros={heros} />
        <WhyChooseUs whychoose={whychoose} />
+       
        <div className="cs-services_section pt pb">
             <div className="cs-container">
                 <div className="cs-custom_heading center">
@@ -95,7 +94,10 @@ const Home = ({heros, whychoose, serviceheadings, services, marketing, videos, b
 export default Home
 
 
-export async function getStaticProps(){
+export async function getServerSideProps(){
+
+  const resposemeta= await fetch("http://localhost:3000/homePageSeoMeta");
+  const metadata = await resposemeta.json();  
  
   const resposeHero= await fetch("http://localhost:3000/herodata");
   const herodata = await resposeHero.json();
@@ -127,6 +129,7 @@ export async function getStaticProps(){
   
   return{
       props:{
+          metaData: metadata,         
           heros: herodata,
           whychoose: whychoosedata,
           serviceheadings: ServicesHeadingData,

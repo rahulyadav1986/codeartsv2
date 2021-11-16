@@ -1,17 +1,12 @@
-import CompanyAddress from "../components/Shared/CompanyAddress";
-import CompanyInfo from "../components/Shared/CompanyInfo";
-import CustomHead from "../components/Shared/CustomHead";
-import InnerHero from "../components/Shared/InnerHero";
-const Contact = ()=>{
+import CustomHead from "../components/Shared/CustomHead"
+import CompanyAddress from "../components/Shared/CompanyAddress"
+import CompanyInfo from "../components/Shared/CompanyInfo"
+import InnerHero from "../components/Shared/InnerHero"
+const Contact = ({metaData, titleData})=>{
     return(
         <>
-            <CustomHead
-                    title="Contact Us"
-                    metades="This is About Us Content"
-            />                
-            <InnerHero
-                pageTitle="Contact us"
-            />
+            <CustomHead metaData={metaData} />             
+            <InnerHero titleData={titleData} />
             <div className="cs-contact_section pt pb">
                 <div className="cs-container">
                     <div className="cs-custom_heading top center">
@@ -67,3 +62,20 @@ const Contact = ()=>{
 }
 
 export default Contact
+
+export async function getServerSideProps(){
+
+    const resposemeta= await fetch("http://localhost:3000/contactPageSeoMeta");
+    const metadata = await resposemeta.json();
+
+    const resposetitle= await fetch("http://localhost:3000/contactPageTitle");
+    const titledata = await resposetitle.json();
+    
+    return{
+        props:{
+            metaData: metadata, 
+            titleData: titledata,           
+        }
+    }
+    
+  }

@@ -11,6 +11,12 @@
             width: 100%;
             text-align: center;
             margin-bottom: 30px;
+            cursor: pointer;
+            &.active{
+                .cs-portfolioDetailsArea{
+                    display: block;
+                }
+            }
             picture{
                 width: 100%;
                 display: block;
