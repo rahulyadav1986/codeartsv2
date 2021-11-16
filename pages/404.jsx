@@ -26,7 +26,7 @@ const PageNotFound = ({headerData})=>{
 export default PageNotFound
 
 
-export async function getServerSideProps(){
+export async function getStaticProps(){
 
     const responseHeader = await fetch("http://localhost:3000/headerData")
     const headerdata = await responseHeader.json()
