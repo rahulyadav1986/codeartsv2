@@ -5,10 +5,10 @@ const ReviewItem = ({review})=>{
                 <img src="../images/quote.svg" className="quote" />
                 <p>{review.description}</p>
                 <div className="cs-profile_area d-flex align-center">
-                    <img src={review.img} alt="" />
+                    <img src={review.avator} alt="" />
                     <div className="cs-pro_del">
                         <div className="name">{review.name}</div>
-                        <div className="deg">{review.desig}</div>
+                        <div className="deg">{review.designation}</div>
                     </div>
                 </div>
             </div>

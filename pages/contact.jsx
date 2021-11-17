@@ -1,10 +1,9 @@
 import CustomHead from "../components/Shared/CustomHead"
-import CompanyAddress from "../components/Shared/CompanyAddress"
-import CompanyInfo from "../components/Shared/CompanyInfo"
+import Header from "../components/Shared/HeaderDetails/Header"
 import InnerHero from "../components/Shared/InnerHero"
-import Header from "../components/Shared/Header"
-import RightAddressInfo from "../components/Shared/RightAddressInfo"
-const Contact = ({metaData, headerData, titleData, contactData})=>{
+import RightAddressInfo from "../components/Shared/HeaderDetails/RightAddressInfo"
+import Footer from "../components/Shared/FooterDetails/Footer"
+const Contact = ({metaData, headerData, titleData, contactData, footer})=>{
     return(
         <>
             <CustomHead metaData={metaData} />   
@@ -45,10 +44,8 @@ const Contact = ({metaData, headerData, titleData, contactData})=>{
                     </div>
                 </div>
             </div>
-
-            <div className="cs-google_map" dangerouslySetInnerHTML={{__html:contactData[0].contactMapUrl}}>
-                
-            </div>
+            <div className="cs-google_map" dangerouslySetInnerHTML={{__html:contactData[0].contactMapUrl}}></div>
+            <Footer footer={footer} />
         </>
     )
 }
@@ -57,8 +54,8 @@ export default Contact
 
 export async function getServerSideProps(){
 
-    const resposemeta= await fetch("http://localhost:3000/contactPageSeoMeta");
-    const metadata = await resposemeta.json();
+    const resposemeta= await fetch("http://localhost:3000/contactPageSeoMeta")
+    const metadata = await resposemeta.json()
 
     const responseHeader = await fetch("http://localhost:3000/headerData")
     const headerdata = await responseHeader.json()
@@ -68,13 +65,17 @@ export async function getServerSideProps(){
 
     const responseContactsDetails = await fetch("http://localhost:3000/contactPageInfo")
     const contactdata = await responseContactsDetails.json()
+
+    const responseFooter = await fetch("http://localhost:3000/footerDetails")
+    const footerdata = await responseFooter.json()
     
     return{
         props:{
             metaData: metadata, 
             headerData: headerdata,
             titleData: titledata, 
-            contactData: contactdata,          
+            contactData: contactdata, 
+            footer: footerdata,         
         }
     }
     

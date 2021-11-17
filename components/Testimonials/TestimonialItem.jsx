@@ -5,10 +5,10 @@ const TestimonialItem = ( {testimonial} )=>{
                 <img src="../images/quote.svg" className="quote" />
                 <p>{testimonial.description}</p>
                 <div className="cs-profile_area d-flex align-center">
-                    <img src={testimonial.img} alt="" />
+                    <img src={testimonial.avator} alt="" />
                     <div className="cs-pro_del">
                         <div className="name">{testimonial.name}</div>
-                        <div className="deg">{testimonial.desig}</div>
+                        <div className="deg">{testimonial.designation}</div>
                     </div>
                 </div>
             </div>

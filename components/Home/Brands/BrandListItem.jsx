@@ -1,12 +1,12 @@
-const BrandListItem = (props)=>{
+const BrandListItem = ({brands})=>{
     return(
         <>
             <div className="cs-brand_item">
                 <div className="cs-brands_pic_back">
-                    <img src={props.img1} className="one" alt="" />
-                    <img src={props.img2} className="two" alt="" />
+                    <img src={brands.img1} className="one" alt="" />
+                    <img src={brands.img2} className="two" alt="" />
                 </div>
-                <h3>{props.title}</h3>
+                <h3>{brands.title}</h3>
             </div>
         </>
     )

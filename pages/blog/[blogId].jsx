@@ -1,7 +1,8 @@
 import Head from "next/head"
 import Link from "next/link";
-import Header from "../../components/Shared/Header";
-const BlogDetails = ({headerData, blogsDetails, blogList})=>{
+import Footer from "../../components/Shared/FooterDetails/Footer";
+import Header from "../../components/Shared/HeaderDetails/Header"
+const BlogDetails = ({headerData, blogsDetails, blogList, footer})=>{
     return(
         <>
             <Head>
@@ -73,6 +74,7 @@ const BlogDetails = ({headerData, blogsDetails, blogList})=>{
                     </div>
                 </div>
             </div>
+            <Footer footer={footer} />
         </>
     )
 }
@@ -89,11 +91,15 @@ export async function getServerSideProps(context){
     const {params} = context;
     const response = await fetch(`http://localhost:3000/blogList/${params.blogId}`);
     const BlogsData = await response.json();
+
+    const responseFooter = await fetch("http://localhost:3000/footerDetails")
+    const footerdata = await responseFooter.json()
     return{
         props:{
             headerData: headerdata,
             blogsDetails: BlogsData,
-            blogList: BlogListData
+            blogList: BlogListData,
+            footer: footerdata,
         }
     }
 }

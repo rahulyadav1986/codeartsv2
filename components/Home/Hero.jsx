@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 const Hero = ({heros})=> {
     return (
@@ -13,7 +12,7 @@ const Hero = ({heros})=> {
                                heros[0].herochangetitle.map((item,i)=>{
                                    return(
                                         <>
-                                          {item.chnagetitle},
+                                          <span key={i}>{item.chnagetitle},</span>
                                         </>
                                    )
                                }) 

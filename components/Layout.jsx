@@ -1,4 +1,3 @@
-import Footer from "./Shared/Footer"
 import Head from "next/head"
 import Script from  'next/script'
 const Layout = ({children})=> {
@@ -8,12 +7,10 @@ const Layout = ({children})=> {
             <link rel="manifest" href="/manifest.json" />
             <meta name="viewport" content="width=device-width,initial-scale=1.0" />
             <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>          
-        </Head>
-        
+        </Head>        
         <main>
             {children}
-        </main>
-        <Footer />
+        </main>        
         <Script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
             strategy="beforeInteractive" 

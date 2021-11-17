@@ -1,5 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css");
-@import "owl.carousel.min.css";
+@import url(g:\officialWork\Codearts\Codearts Live Site\Next\CodeartsV4\codeartsv2\styles\owl.carousel.min.css);
 /*common*/
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600;700;800&display=swap");
@@ -4379,6 +4379,7 @@ footer .cs-bottom .cs-footer_items .cs-footer_item .cs-social li a {
   background-color: var(--common-color2);
   -webkit-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
+  text-transform: capitalize;
 }
 
 footer .cs-bottom .cs-footer_items .cs-footer_item .cs-social li a:hover {
@@ -4399,6 +4400,7 @@ footer .cs-bottom .cs-footer_items .cs-footer_item .cs-ft_menu li {
 footer .cs-bottom .cs-footer_items .cs-footer_item .cs-ft_menu li a {
   color: var(--common-color);
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 footer .cs-copyright {

@@ -6,11 +6,12 @@ const CompanyAddressItem = ({address})=>{
                     src={address.icon}  
                     background="transparent"  
                     speed="1"  
-                    loop autoplay>
+                    loop="true"
+                    autoplay="true">
                 </lottie-player>
                 <p>
                     <strong>{address.country} </strong><br />
-                    {address.address}  
+                    <span>{address.address}</span>
                 </p>
             </li>
         </>

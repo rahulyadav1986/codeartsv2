@@ -2,14 +2,15 @@ import CustomHead from "../components/Shared/CustomHead"
 import InnerHero from "../components/Shared/InnerHero"
 import WhyChooseusContent from "../components/Home/WhyChooseDetails/WhyChooseUsContent"
 import SeoListDetails from "../components/About/SeoListDetails"
-import SkillItem from "../components/Skills/SkillItem"
-import TeamItem from "../components/Team/TeamItem"
-import TestimonialItem from "../components/Testimonials/TestimonialItem"
 import WhatWeDoItem from "../components/Services/WhatWeDoItem"
 import WhyChooseItem from "../components/Home/WhyChooseDetails/WhyChooseItem"
 import WhyListItem from "../components/Home/WhyChooseDetails/WhyListItem"
-import Header from "../components/Shared/Header"
-const About = ({metaData, headerData, titleData,  whychoose, services, skills, teams, testimonials})=>{
+import Header from "../components/Shared/HeaderDetails/Header"
+import Testimonials from "../components/Testimonials/Testimonials"
+import Skills from "../components/Skills/Skills"
+import Teams from "../components/Team/Teams"
+import Footer from "../components/Shared/FooterDetails/Footer"
+const About = ({metaData, headerData, titleData,  whychoose, serviceheadings, services, skills, teams, testimonials, footer})=>{
     
     return(
         <>
@@ -29,7 +30,6 @@ const About = ({metaData, headerData, titleData,  whychoose, services, skills, t
                     </ul>
                 </div>
             </div>
-
             <div className="cs-about_section pb">
                 <div className="cs-container d-flex align-center justify-between">
                     <div className="cs-content_area">
@@ -46,11 +46,11 @@ const About = ({metaData, headerData, titleData,  whychoose, services, skills, t
                         </ul>
                     </div>
                     <div className="cs-right_section">
-                        <img src="../images/about_us.jpg" alt="" />
+                        <img src={whychoose[0].img1} alt="" />
                         <span className="cs-business_label">
-                            <h4>Business label</h4>
+                            <h4>{whychoose[0].icontitle_one}</h4>
                             <lord-icon
-                                src="https://cdn.lordicon.com/qlbskwpn.json"
+                                src={whychoose[0].icon1}
                                 trigger="loop"
                                 delay="2000" 
                                 colors="primary:#121331,secondary:#f47514">
@@ -59,15 +59,14 @@ const About = ({metaData, headerData, titleData,  whychoose, services, skills, t
                     </div>
                 </div>
             </div>
-
             <div className="cs-about_section cs-seo_company pt pb">
                 <div className="cs-container d-flex align-center justify-between">
                     <div className="cs-right_section">
-                        <img src="../images/about_us.jpg" alt="" />
+                        <img src={whychoose[0].img2} alt="" />
                         <span className="cs-business_label">
-                            <h4>SEO</h4>
+                            <h4>{whychoose[0].icontitle_two}</h4>
                             <lord-icon
-                                src="https://cdn.lordicon.com/uqpazftn.json"
+                                src={whychoose[0].icon2}
                                 trigger="loop"
                                 delay="2000" 
                                 colors="primary:#121331,secondary:#f47514">
@@ -76,10 +75,10 @@ const About = ({metaData, headerData, titleData,  whychoose, services, skills, t
                     </div>
                     <div className="cs-content_area">
                         <div className="cs-custom_heading">
-                            <h4>WHY CHOOSE US</h4>
-                            <h2>Work With A Dedicated SEO Company</h2>
+                            <h4>{whychoose[0].aboutextrasubtitle}</h4>
+                            <h2>{whychoose[0].aboutextratitle}</h2>
                         </div>
-                        <p>Simply dummy text of the printing and typesetting industry. Lorem Ipsum has the industry’s standard dummy text ever since the when an.</p>
+                        <p dangerouslySetInnerHTML={{__html:whychoose[0].aboutextradescription}}></p>
                         <ul className="seo_list_back">
                             <SeoListDetails />
                         </ul>
@@ -87,12 +86,11 @@ const About = ({metaData, headerData, titleData,  whychoose, services, skills, t
                     
                 </div>
             </div>
-
             <div className="cs-services_section pt pb">
                 <div className="cs-container">
                     <div className="cs-custom_heading center">
-                        <h4>WHAT WE DO</h4>
-                        <h2>What We Offer</h2>
+                        <h4>{serviceheadings[0].subtitle}</h4>
+                        <h2>{serviceheadings[0].maintitle}</h2>
                     </div>  
                     <div className="cs-main_section pt_small">
                     {
@@ -106,70 +104,10 @@ const About = ({metaData, headerData, titleData,  whychoose, services, skills, t
                     </div>  
                 </div>
             </div>
-            <div className="cs-team_section pt pb">
-                <div className="cs-container">
-                    <div className="cs-custom_heading center">
-                        <h4>WHAT WE ARE</h4>
-                        <h2>Our Specialist Teams</h2>
-                    </div>
-                    <div className="cs-main_team_section pt_small owl-carousel" id="team-slider">
-                        {
-                            teams.map((team, i)=>{
-                                return(
-                                    <TeamItem key={i} team={team} />
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
-            <div className="maximize_result pt pb">
-                <div className="cs-container">
-                    <div className="cs-head d-flex align-center justify-between">
-                        <div className="cs-custom_heading">
-                            <h2>Maximizing Your<br />Potentials With UVO<br />Service</h2>
-                            <p>Praesent sollicitudin felis a ornare volutpat. Nullam males uada sem sit amet semper tristique. Donec nec neque lectus. Nunc lis a ornare volutpat. N mattis.</p>
-                        </div>
-                        <ul className="cs-skills_area">
-                            {
-                                skills.map((skill, i)=>{
-                                    return(
-                                        <li key={i}>
-                                            <SkillItem skill={skill} />
-                                        </li>
-                                    )
-                                })
-                            }
-                            
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div className="cs-testimonial_section pt pb">
-                <div className="cs-container d-flex justify-between">
-                    <div className="cs-custom_heading">
-                        <h4>TESTIMONIALS</h4>
-                        <h2>What Our Clients Say</h2>
-                        <p>Codearts Solution stays ahead of the curve with digital marketing trends.</p>
-                        <lord-icon
-                            src="https://cdn.lordicon.com/wgkjwucf.json"
-                            trigger="loop"
-                            delay="2000"
-                            colors="primary:#eff2f4,secondary:#eff2f4">
-                        </lord-icon>
-                    </div> 
-                    <div className="cs-testimonial_main_area owl-carousel" id="testi-slider">
-                        {
-                            testimonials.map((testimonial,i)=>{
-                                return(
-                                    <TestimonialItem key={i} testimonial={testimonial} />
-                                )
-                            })
-                        }
-                    </div>
-                    
-                </div>
-            </div>
+            <Teams teams={teams} />
+            <Skills skills={skills} />
+            <Testimonials testimonials={testimonials} />
+            <Footer footer={footer} />
         </>
     )
 }
@@ -183,33 +121,42 @@ export async function getServerSideProps(){
     const responseHeader = await fetch("http://localhost:3000/headerData")
     const headerdata = await responseHeader.json()
 
-    const resposetitle= await fetch("http://localhost:3000/aboutPageTitle");
-    const titledata = await resposetitle.json();
+    const resposetitle= await fetch("http://localhost:3000/aboutPageTitle")
+    const titledata = await resposetitle.json()
 
-    const resposeWhychoose= await fetch("http://localhost:3000/whychooseus");
-    const whychoosedata = await resposeWhychoose.json();
+    const resposeWhychoose= await fetch("http://localhost:3000/whychooseus")
+    const whychoosedata = await resposeWhychoose.json()
 
-    const responseServices = await fetch("http://localhost:4000/api/services");
-    const ServicesData = await responseServices.json();
+    const responseServiceHeadings = await fetch("http://localhost:3000/serviceheadings")
+    const ServicesHeadingData = await responseServiceHeadings.json()
 
-    const responseSkill = await fetch("http://localhost:4000/api/skills");
-    const skillData = await responseSkill.json();
+    const responseServices = await fetch("http://localhost:3000/services")
+    const ServicesData = await responseServices.json()
 
-    const responseTeam = await fetch("http://localhost:4000/api/teams");
-    const teamData = await responseTeam.json();
+    const responseSkill = await fetch("http://localhost:3000/skillsDetails")
+    const skillData = await responseSkill.json()
 
-    const responseTestimonial = await fetch("http://localhost:4000/api/testimonials");
-    const testimonialData = await responseTestimonial.json();
+    const responseTeam = await fetch("http://localhost:3000/teamDetails")
+    const teamData = await responseTeam.json()
+
+    const responseTestimonial = await fetch("http://localhost:3000/testimonailsDetails")
+    const testimonialdata = await responseTestimonial.json()
+
+    const responseFooter = await fetch("http://localhost:3000/footerDetails")
+    const footerdata = await responseFooter.json()
+
     return{
         props:{
             metaData: metadata,
             headerData: headerdata,
             titleData: titledata,
             whychoose: whychoosedata,
+            serviceheadings: ServicesHeadingData,
             services: ServicesData,
             skills: skillData,
             teams: teamData,
-            testimonials: testimonialData.slice(0,3)
+            testimonials: testimonialdata,
+            footer: footerdata,
         }
     }
 

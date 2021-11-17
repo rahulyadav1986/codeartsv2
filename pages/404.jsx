@@ -1,7 +1,8 @@
 import Head from "next/head"
 import Link from "next/link";
-import Header from "../components/Shared/Header";
-const PageNotFound = ({headerData})=>{
+import Footer from "../components/Shared/FooterDetails/Footer";
+import Header from "../components/Shared/HeaderDetails/Header"
+const PageNotFound = ({headerData, footer})=>{
     return(
         <>
             <Head>
@@ -19,6 +20,7 @@ const PageNotFound = ({headerData})=>{
                     </ul>
                 </div>
            </div>
+           <Footer footer={footer} />
         </>
     )
 }
@@ -30,10 +32,14 @@ export async function getStaticProps(){
 
     const responseHeader = await fetch("http://localhost:3000/headerData")
     const headerdata = await responseHeader.json()
+
+    const responseFooter = await fetch("http://localhost:3000/footerDetails")
+    const footerdata = await responseFooter.json()
     
     return{
         props:{          
-            headerData: headerdata,      
+            headerData: headerdata,   
+            footer: footerdata,   
         }
     }
     

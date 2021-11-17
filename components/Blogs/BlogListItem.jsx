@@ -5,9 +5,11 @@ const BlogListItem = ({blog})=>{
             <div className="cs-blog_item">
                 <div className="cs-blog_pic_back">
                     <img src={blog.blogAvator} alt="" />
-                    <a href="" className="cs-circle d-flex align-center justify-center">
+                    <Link href={`/blog/${blog.id}`}>
+                    <a className="cs-circle d-flex align-center justify-center">
                         <img src="../images/ani_arrow.gif" />
                     </a>
+                    </Link>
                 </div>
                 <div className="cs-content_area">
                     <div className="cs-widget_section d-flex align-center">

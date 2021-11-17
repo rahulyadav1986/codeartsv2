@@ -1,17 +1,16 @@
 import CustomHead from "../components/Shared/CustomHead"
-import Header from "../components/Shared/Header"
+import Header from "../components/Shared/HeaderDetails/Header"
 import Hero from '../components/Home/Hero'
 import WhyChooseUs from '../components/Home/WhyChooseDetails/WhyChooseUs'
 import Marketing from '../components/Home/Marketing/Marketing'
 import Video from '../components/Home/Video'
 import Brands from '../components/Home/Brands/Brands'
-import TestimonialItem from '../components/Testimonials/TestimonialItem'
 import WhatWeDoItem from '../components/Services/WhatWeDoItem'
 import BlogListItem from '../components/Blogs/BlogListItem'
+import Testimonials from "../components/Testimonials/Testimonials"
+import Footer from "../components/Shared/FooterDetails/Footer"
 
-
-
-const Home = ({metaData, headerData, heros, whychoose, serviceheadings, services, marketing, videos, blogsDetails, blogList, testimonials})=> {
+const Home = ({metaData, headerData, heros, whychoose, serviceheadings, services, marketing, videos, blogsDetails, blogList, testimonials, brands, footer})=> {
   return (
     <>        
        <CustomHead metaData={metaData} />  
@@ -61,33 +60,10 @@ const Home = ({metaData, headerData, heros, whychoose, serviceheadings, services
                     </div>
                 </div>
             </div>
-        </div>
-       <Brands />
-       <div className="cs-testimonial_section pt pb">
-          <div className="cs-container d-flex justify-between">
-              <div className="cs-custom_heading">
-                  <h4>TESTIMONIALS</h4>
-                  <h2>What Our Clients Say</h2>
-                  <p>Codearts Solution stays ahead of the curve with digital marketing trends.</p>
-                  <lord-icon
-                      src="https://cdn.lordicon.com/wgkjwucf.json"
-                      trigger="loop"
-                      delay="2000"
-                      colors="primary:#eff2f4,secondary:#eff2f4">
-                  </lord-icon>
-              </div> 
-              <div className="cs-testimonial_main_area owl-carousel" id="testi-slider">
-                  {
-                      testimonials.map((testimonial,i)=>{
-                          return(
-                              <TestimonialItem key={i} testimonial={testimonial} />
-                          )
-                      })
-                  }
-              </div>
-              
-          </div>
-      </div>
+       </div>
+       <Brands brands={brands} />
+       <Testimonials testimonials={testimonials} />
+       <Footer footer={footer} />
     </>
   )
 }
@@ -109,26 +85,32 @@ export async function getServerSideProps(){
   const resposeWhychoose= await fetch("http://localhost:3000/whychooseus");
   const whychoosedata = await resposeWhychoose.json();
 
-  const responseServiceHeadings = await fetch("http://localhost:3000/serviceheadings");
-  const ServicesHeadingData = await responseServiceHeadings.json();
+  const responseServiceHeadings = await fetch("http://localhost:3000/serviceheadings")
+  const ServicesHeadingData = await responseServiceHeadings.json()
 
-  const responseServices = await fetch("http://localhost:3000/services");
-  const ServicesData = await responseServices.json();
+  const responseServices = await fetch("http://localhost:3000/services")
+  const ServicesData = await responseServices.json()
 
-  const responseMarketing = await fetch("http://localhost:3000/marketing");
-  const marketingData = await responseMarketing.json();
+  const responseMarketing = await fetch("http://localhost:3000/marketing")
+  const marketingData = await responseMarketing.json()
 
-  const responseVideo = await fetch("http://localhost:3000/videoDetails");
-  const VideoData = await responseVideo.json();
+  const responseVideo = await fetch("http://localhost:3000/videoDetails")
+  const VideoData = await responseVideo.json()
 
-  const responseBlogs = await fetch("http://localhost:3000/blogsDetails");
-  const BlogsData = await responseBlogs.json();
+  const responseBlogs = await fetch("http://localhost:3000/blogsDetails")
+  const BlogsData = await responseBlogs.json()
 
-  const responseBlogList = await fetch("http://localhost:3000/blogList");
-  const BlogListData = await responseBlogList.json();
+  const responseBlogList = await fetch("http://localhost:3000/blogList")
+  const BlogListData = await responseBlogList.json()
 
-  const responseTestimonial = await fetch("http://localhost:4000/api/testimonials");
-  const testimonialData = await responseTestimonial.json();
+  const responseTestimonial = await fetch("http://localhost:3000/testimonailsDetails")
+  const testimonialdata = await responseTestimonial.json()
+
+  const responseBrands = await fetch("http://localhost:3000/brands")
+  const branddata = await responseBrands.json()
+
+  const responseFooter = await fetch("http://localhost:3000/footerDetails")
+  const footerdata = await responseFooter.json()
 
   
   return{
@@ -143,7 +125,9 @@ export async function getServerSideProps(){
           videos: VideoData,
           blogsDetails: BlogsData,
           blogList: BlogListData,
-          testimonials: testimonialData.slice(0,3),
+          testimonials: testimonialdata,
+          brands: branddata,
+          footer: footerdata,
       }
   }
   

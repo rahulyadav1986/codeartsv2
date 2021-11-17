@@ -6,7 +6,8 @@ const CompanyInfoItem = ({info})=>{
                     src={info.icon} 
                     background="transparent"  
                     speed="1"  
-                    loop autoplay>
+                    loop="true"
+                    autoplay="true">
                 </lottie-player>
                 <p dangerouslySetInnerHTML={{__html:info.info}}></p>
             </li>

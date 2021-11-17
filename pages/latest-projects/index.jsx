@@ -2,32 +2,37 @@ import CustomHead from "../../components/Shared/CustomHead";
 import Projects from "../../components/Projects"
 import InnerHero from "../../components/Shared/InnerHero"
 import { useState } from 'react'
-import Header from "../../components/Shared/Header";
+import Header from "../../components/Shared/HeaderDetails/Header"
+import Teams from "../../components/Team/Teams";
+import Skills from "../../components/Skills/Skills";
+import Testimonials from "../../components/Testimonials/Testimonials";
+import ProjectPopup from "../../components/Projects/ProjectPopup";
+import Footer from "../../components/Shared/FooterDetails/Footer";
 
 
-const LastProjects = ({metaData, headerData, titleData, projects})=>{
-    const [ProjectDetailsClick, setProjectDetailsClick]= useState(false);
-    const ProjectdelClick = ()=> setProjectDetailsClick(!ProjectDetailsClick);
-    return(
+const LastProjects = ({ metaData, headerData, titleData, projects, skills, teams, testimonials, footer }) => {
+    const [ProjectDetailsClick, setProjectDetailsClick] = useState(false);
+    const ProjectdelClick = () => setProjectDetailsClick(!ProjectDetailsClick);
+    return (
         <>
             <CustomHead metaData={metaData} />
-            <Header headerData={headerData} /> 
+            <Header headerData={headerData} />
             <InnerHero titleData={titleData} />
             <div className="cs-portfolio_section pt pb">
                 <div className="cs-container">
                     <div className="cs-custom_heading center">
                         <h4>QUICK GETTING STARTED</h4>
-                        <h2>Our World className Portfolio</h2>
+                        <h2>Our World Class Portfolio</h2>
                     </div>
                     <Projects>
                         {
-                            projects.map((item,i)=>{
-                                return(
+                            projects.map((item, i) => {
+                                return (
                                     <div key={i} label={item.catName}>
                                         {
-                                            item.catList.map((list,i)=>{
-                                                return(
-                                                    
+                                            item.catList.map((list, i) => {
+                                                return (
+
                                                     <div key={i} className={ProjectDetailsClick ? 'cs-portfolio_item close' : 'cs-portfolio_item'} >
                                                         <picture>
                                                             <img src={list.projeclisttavator} alt="" />
@@ -35,74 +40,13 @@ const LastProjects = ({metaData, headerData, titleData, projects})=>{
                                                         <h3>{list.projectTitle}</h3>
                                                         <p>{list.projectType}</p>
                                                         <div className="cs-portfolioDetailsArea">
-                        
                                                             <div className="cs-main_area">
-                                                                <div className="cs-close_pop d-flex align-center justify-center" onClick={ProjectdelClick}>x</div>
-                                                                <div className="cs-main_details d-flex justify-between">
-                                                                    <div className="cs-portfolio_content_area">
-                                                                    <div className="cs-cat">Identity Mockup  {list.projectDate}</div>
-                                                                    <h3>{list.projectTitle}</h3>                
-                                                                    <div className="cs-pro_details">
-                                                                        <h4>About</h4>
-                                                                        <p>{list.projectDescription}</p>
-                                                                        <div className="cs-option d-flex">
-                                                                            <div className="port">
-                                                                                <h4>Technology Used</h4>
-                                                                                <ul className="cs-list">
-                                                                                    {
-                                                                                        list.techUsed.map((item,i)=>{
-                                                                                            return(
-                                                                                                <li key={i}>{item.techname}</li>
-                                                                                            )
-                                                                                        })
-                                                                                    }
-                                                                                    
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div className="port">
-                                                                                <h4>Our Role</h4>
-                                                                                <ul className="cs-list">
-                                                                                    {
-                                                                                        list.projectRoll.map((item,i)=>{
-                                                                                            return(
-                                                                                                <li key={i}>{item.role}</li>
-                                                                                            )
-                                                                                        })
-                                                                                    }
-                                                                                </ul>
-                                                                            </div>
-                                                                            
-                                                                        </div>
-                                                                        <div className="cs-review_item">
-                                                                            <lord-icon
-                                                                                src="https://cdn.lordicon.com/bwordpbq.json"
-                                                                                trigger="loop"
-                                                                                delay="2000"
-                                                                                colors="primary:#f47514,secondary:#08a88a">
-                                                                            </lord-icon>
-                                                                            <p>{list.clientreviews}</p>
-                                                                            <div className="cs-profile_area d-flex align-center">
-                                                                                <img src={list.clientavator} alt="" />
-                                                                                <div className="cs-pro_del">
-                                                                                    <div className="name">{list.clientName}</div>
-                                                                                    <div className="deg">{list.clientPosi}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="cs-button small">
-                                                                            <a href={list.projectLink} target="_blank" className="d-flex align-center justify-center">OPEN PROJECT</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="cs-portfolio_view_area">
-                                                                    <img src="images/elarahomes.jpg" alt="" />
-                                                                </div>
-                                                                </div> 
-                                                                
+                                                                <div className="cs-close_pop d-flex align-center justify-center" onClick={ProjectdelClick} >x</div>
+                                                                <ProjectPopup list={list} />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                   
+
                                                 )
                                             })
                                         }
@@ -110,37 +54,56 @@ const LastProjects = ({metaData, headerData, titleData, projects})=>{
                                 )
                             })
                         }
-                        
-                       
+
+
                     </Projects>
                 </div>
             </div>
-            
+            <Teams teams={teams} />
+            <Skills skills={skills} />
+            <Testimonials testimonials={testimonials} />
+            <Footer footer={footer} />           
         </>
     )
 }
 
 export default LastProjects
 
-export async function getServerSideProps(){
-    const resposemeta= await fetch("http://localhost:3000/latestProjectsPageSeoMeta");
-    const metadata = await resposemeta.json();
+export async function getServerSideProps() {
+    const resposemeta = await fetch("http://localhost:3000/latestProjectsPageSeoMeta")
+    const metadata = await resposemeta.json()
 
     const responseHeader = await fetch("http://localhost:3000/headerData")
     const headerdata = await responseHeader.json()
 
-    const resposetitle= await fetch("http://localhost:3000/projectPageTitle");
-    const titledata = await resposetitle.json();
+    const resposetitle = await fetch("http://localhost:3000/projectPageTitle")
+    const titledata = await resposetitle.json()
 
-    const responseProject = await fetch("http://localhost:3000/projectDetails");
-    const ProjectData = await responseProject.json();
+    const responseProject = await fetch("http://localhost:3000/projectDetails")
+    const ProjectData = await responseProject.json()
 
-    return{
-        props:{
+    const responseSkill = await fetch("http://localhost:3000/skillsDetails")
+    const skillData = await responseSkill.json()
+
+    const responseTeam = await fetch("http://localhost:3000/teamDetails")
+    const teamData = await responseTeam.json()
+
+    const responseTestimonial = await fetch("http://localhost:3000/testimonailsDetails")
+    const testimonialdata = await responseTestimonial.json()
+
+    const responseFooter = await fetch("http://localhost:3000/footerDetails")
+    const footerdata = await responseFooter.json()
+
+    return {
+        props: {
             metaData: metadata,
             headerData: headerdata,
             titleData: titledata,
-            projects: ProjectData
+            projects: ProjectData,
+            skills: skillData,
+            teams: teamData,
+            testimonials: testimonialdata,
+            footer: footerdata,
         }
     }
 }

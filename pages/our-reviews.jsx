@@ -1,25 +1,26 @@
+import Header from "../components/Shared/HeaderDetails/Header"
 import CustomHead from "../components/Shared/CustomHead"
-import Header from "../components/Shared/Header"
 import InnerHero from "../components/Shared/InnerHero"
-import SkillItem from "../components/Skills/SkillItem"
-import TeamItem from "../components/Team/TeamItem"
 import ReviewItem from "../components/Testimonials/ReviewItem"
+import Skills from "../components/Skills/Skills"
+import Teams from "../components/Team/Teams"
+import Footer from "../components/Shared/FooterDetails/Footer"
 
-const Reviews = ({headerData, metaData, titleData, testimonials, skills, teams})=>{
+const Reviews = ({headerData, metaData, titleData, testimonials, skills, teams, footer})=>{
     return(
         <>
             <CustomHead metaData={metaData} />
             <Header headerData={headerData} />        
             <InnerHero titleData={titleData} />
-            <div class="cs-reviews_section pt pb">
-                <div class="cs-container">
-                    <div class="cs-custom_heading center">
-                        <h4>REVIEWS</h4>
-                        <h2>Our Great Reviews</h2>
+            <div className="cs-reviews_section pt pb">
+                <div className="cs-container">
+                    <div className="cs-custom_heading center">
+                        <h4>{testimonials[0].reviewPageSubTitle}</h4>
+                        <h2>{testimonials[0].reviewPageTitle}</h2>
                     </div>
-                    <div class="cs-main_reviews pt_small">
+                    <div className="cs-main_reviews pt_small">
                         {
-                            testimonials.map((review,i)=>{
+                            testimonials[0].reviewList.map((review,i)=>{
                                 return(
                                     <ReviewItem key={i} review={review} />
                                 )
@@ -30,47 +31,9 @@ const Reviews = ({headerData, metaData, titleData, testimonials, skills, teams})
                     </div>
                 </div>
             </div>
-            <div className="maximize_result pt pb">
-                <div className="cs-container">
-                    <div className="cs-head d-flex align-center justify-between">
-                        <div className="cs-custom_heading">
-                            <h2>Maximizing Your<br />Potentials With UVO<br />Service</h2>
-                            <p>Praesent sollicitudin felis a ornare volutpat. Nullam males uada sem sit amet semper tristique. Donec nec neque lectus. Nunc lis a ornare volutpat. N mattis.</p>
-                        </div>
-                        <ul className="cs-skills_area">
-                            {
-                                skills.map((skill, i)=>{
-                                    return(
-                                        <li key={i}>
-                                            <SkillItem skill={skill} />
-                                        </li>
-                                    )
-                                })
-                            }
-                            
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div className="cs-team_section pt pb">
-                <div className="cs-container">
-                    <div className="cs-custom_heading center">
-                        <h4>WHAT WE ARE</h4>
-                        <h2>Our Specialist Teams</h2>
-                    </div>
-                    <div className="cs-main_team_section pt_small owl-carousel" id="team-slider">
-                        {
-                            teams.map((team, i)=>{
-                                return(
-                                    <TeamItem key={i} team={team} />
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
-            
-            
+            <Skills skills={skills} />
+            <Teams teams={teams} />
+            <Footer footer={footer} />
         </>
     )
 }
@@ -88,14 +51,18 @@ export async function getServerSideProps(){
     const resposetitle= await fetch("http://localhost:3000/ourReviewsPageTitle");
     const titledata = await resposetitle.json();    
 
-    const responseSkill = await fetch("http://localhost:4000/api/skills");
+    const responseSkill = await fetch("http://localhost:3000/skillsDetails");
     const skillData = await responseSkill.json();
 
-    const responseTeam = await fetch("http://localhost:4000/api/teams");
+    const responseTeam = await fetch("http://localhost:3000/teamDetails");
     const teamData = await responseTeam.json();
 
-    const responseTestimonial = await fetch("http://localhost:4000/api/testimonials");
+    const responseTestimonial = await fetch("http://localhost:3000/testimonailsDetails");
     const testimonialData = await responseTestimonial.json();
+
+    const responseFooter = await fetch("http://localhost:3000/footerDetails");
+    const footerdata = await responseFooter.json();
+
     return{
         props:{
             metaData: metadata,
@@ -104,6 +71,7 @@ export async function getServerSideProps(){
             skills: skillData,
             teams: teamData,
             testimonials: testimonialData,
+            footer: footerdata,
         }
     }
 

@@ -173,19 +173,19 @@ owl.owlCarousel({
 
 setInterval(() => {
     let singleProjectpopup = document.getElementsByClassName("cs-portfolio_item");
+    
     for (let i = 0; i < singleProjectpopup.length; i++) {
         singleProjectpopup[i].addEventListener("click", function (item) {
             for (let i = 0; i < singleProjectpopup.length; i++) {
                 if (item !== singleProjectpopup) {
-                    singleProjectpopup[i].classList.remove("active");
+                    singleProjectpopup[i].classList.add("active");
                 }
             }
-            this.classList.toggle("active");
+            
         });
     }
+    
 }, 500);
-
-
 
 
 

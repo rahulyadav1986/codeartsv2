@@ -1,9 +1,11 @@
 import CustomHead from "../../components/Shared/CustomHead"
 import InnerHero from "../../components/Shared/InnerHero"
 import BlogListItem from "../../components/Blogs/BlogListItem"
-import Header from "../../components/Shared/Header"
+import Header from "../../components/Shared/HeaderDetails/Header"
+import Footer from "../../components/Shared/FooterDetails/Footer"
 
-const Blogs = ({metaData, headerData, titleData, blogsDetails, blogList})=>{
+
+const Blogs = ({metaData, headerData, titleData, blogsDetails, blogList, footer})=>{
     return(
         <>
             <CustomHead metaData={metaData} />
@@ -32,6 +34,7 @@ const Blogs = ({metaData, headerData, titleData, blogsDetails, blogList})=>{
                     </div>
                 </div>
             </div>
+            <Footer footer={footer} />
         </>
     )
 }
@@ -39,20 +42,23 @@ const Blogs = ({metaData, headerData, titleData, blogsDetails, blogList})=>{
 export default Blogs
 
 export async function getServerSideProps(){
-    const resposemeta= await fetch("http://localhost:3000/blogsPageSeoMeta");
-    const metadata = await resposemeta.json();
+    const resposemeta= await fetch("http://localhost:3000/blogsPageSeoMeta")
+    const metadata = await resposemeta.json()
 
     const responseHeader = await fetch("http://localhost:3000/headerData")
     const headerdata = await responseHeader.json()
 
-    const resposetitle= await fetch("http://localhost:3000/blogPageTitle");
-    const titledata = await resposetitle.json();
+    const resposetitle= await fetch("http://localhost:3000/blogPageTitle")
+    const titledata = await resposetitle.json()
 
-    const responseBlogs = await fetch("http://localhost:3000/blogsDetails");
-    const BlogsData = await responseBlogs.json();
+    const responseBlogs = await fetch("http://localhost:3000/blogsDetails")
+    const BlogsData = await responseBlogs.json()
 
-    const responseBlogList = await fetch("http://localhost:3000/blogList");
-    const BlogListData = await responseBlogList.json();
+    const responseBlogList = await fetch("http://localhost:3000/blogList")
+    const BlogListData = await responseBlogList.json()
+
+    const responseFooter = await fetch("http://localhost:3000/footerDetails")
+    const footerdata = await responseFooter.json()
 
     return{
         props:{
@@ -60,7 +66,8 @@ export async function getServerSideProps(){
             headerData: headerdata,
             titleData: titledata,
             blogsDetails: BlogsData,
-            blogList: BlogListData
+            blogList: BlogListData,
+            footer: footerdata,
         }
     }
 }
