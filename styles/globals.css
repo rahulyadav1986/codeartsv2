@@ -1,5 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css");
-@import url(g:\officialWork\Codearts\Codearts Live Site\Next\CodeartsV4\codeartsv2\styles\owl.carousel.min.css);
+@import url("./owl.carousel.min.css");
 /*common*/
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600;700;800&display=swap");
